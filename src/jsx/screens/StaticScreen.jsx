@@ -2,7 +2,7 @@
 'use strict';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonToolbar, ToggleButton, ToggleButtonGroup, FormControl, Alert, Panel, Button } from 'react-bootstrap';
+import { ButtonToolbar, ToggleButton, Form, Col, ToggleButtonGroup, FormGroup, InputGroup, FormControl, Alert, Panel, Button } from 'react-bootstrap';
 import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
 class StaticScreen extends React.Component {
@@ -13,26 +13,34 @@ class StaticScreen extends React.Component {
             folder: null,
             date: moment(),
             focused: false,
-            user: null
+            user: null,
+            vip: false
         };
         this._doVentureClick = this._doVentureClick.bind(this);
         this._onFolderChange = this._onFolderChange.bind(this);
         this._onMemberButtonClick = this._onMemberButtonClick.bind(this);
+        this._onVipButtonClick = this._onVipButtonClick.bind(this);
     }
     _doVentureClick(data) {
         this.setState({ venture: data.props.value });
     }
     _onFolderChange(e) {
         this.setState({ folder: e.target.value });
+        if (this.state.vip === false && e.target.value.includes('-vip-')) {
+            this.setState({ vip: true });
+        }
     }
     _onMemberButtonClick(id) {
         this.setState({ user: id });
+    }
+    _onVipButtonClick(){
+        this.setState({ vip: !this.state.vip });
     }
     _copyToClipboard(text) {
         console.log(text);
         if (window.clipboardData && window.clipboardData.setData) {
             // IE specific code path to prevent textarea being shown while dialog is visible.
-            return window.clipboardData.setData('Text', text); 
+            return window.clipboardData.setData('Text', text);
 
         } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
             var textarea = document.createElement('textarea');
@@ -69,16 +77,27 @@ class StaticScreen extends React.Component {
                     </ToggleButtonGroup>
                 </ButtonToolbar>);
 
-            const promotionsInfo = <div className="form">
-                <FormControl type="text"
-                    placeholder="Enter promotion folder name" onChange={this._onFolderChange}></FormControl>
-                <SingleDatePicker
-                    date={this.state.date}
-                    onDateChange={date => this.setState({ date: date })}
-                    focused={this.state.focused}
-                    onFocusChange={({ focused }) => this.setState({ focused })}
-                />
-            </div>;
+            const promotionsInfo = <Form horizontal>
+                <FormGroup>
+                <InputGroup className="form">
+                    <Col>
+                    <Button bsStyle={this.state.vip ? 'info' : 'default'} onClick={this._onVipButtonClick}>VIP</Button>
+                    </Col>
+                    <Col lg={10}>
+                        <FormControl type="text"
+                        placeholder="Enter promotion folder name" onChange={this._onFolderChange}></FormControl>
+                    </Col>
+                    <Col>
+                        <SingleDatePicker
+                                date={this.state.date}
+                                onDateChange={date => this.setState({ date: date })}
+                                focused={this.state.focused}
+                                onFocusChange={({ focused }) => this.setState({ focused })}
+                        />
+                    </Col>
+                </InputGroup>
+
+            </FormGroup></Form>;
 
             let output = <Alert bsStyle="danger">
                 <strong>Missing Information!</strong> Please Fill Folder Name and Date</Alert>;
@@ -89,11 +108,12 @@ class StaticScreen extends React.Component {
                         this._onMemberButtonClick(id);
                     }}>{id}</Button>);
                 const date = this.state.date.format('DD-MM-YYYY');
+                const vip = this.state.vip ? 'vip/' : '';
                 const folder = this.state.folder.toLowerCase();
                 const user = this.state.user ? this.state.user : ventureItem.testUsers[0];
-                const desktopUrl = `https://${ventureItem.desktopUrl}/api/content/promotions/${folder}/?previewDate=${date}&m=${user}`;
+                const desktopUrl = `https://${ventureItem.desktopUrl}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
                 const unicornUrlPreview = `https://${ventureItem.url}/api/content/promotions?previewDate=${date}`;
-                const unicornUrl = `https://${ventureItem.url}/api/content/promotions/detailedpromotionstory/${folder}/?previewDate=${date}&m=${user}`;
+                const unicornUrl = `https://${ventureItem.url}/api/content/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
                 const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrlPreview}\n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
                 output = <Panel>
                     <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY</Button>
@@ -105,7 +125,7 @@ class StaticScreen extends React.Component {
                     <p><a href={unicornUrl}>{unicornUrl}</a></p>
                     <span>Test Users:</span>
                     <p>{testUsers}</p>
-                    <Button bsStyle="info" block onClick={this._copyToClipboardClick}>COPY</Button>
+                    <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY</Button>
                 </Panel>;
 
             }
