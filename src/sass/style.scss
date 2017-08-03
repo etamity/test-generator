@@ -1,0 +1,18 @@
+@import 'node_modules/react-dates/css/variables.scss';
+@import 'node_modules/react-dates/css/styles.scss';
+.container {
+    margin: 50px auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto;
+}
+
+span{
+    font-weight: bold;
+}
+p {
+    color: blue;
+}

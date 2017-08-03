@@ -1,0 +1,24 @@
+{
+  "name": "template-static",
+  "version": "1.0.0",
+  "description": "Template for Static Promotions",
+  "devDependencies": {
+    "babel-polyfill": "^6.7.4",
+    "breakpoint-sass": "^2.7.0",
+    "gulp": "~3.9.0",
+    "promo-builder": "^2.0.0",
+    "react": "~15.3.0",
+    "react-dom": "~15.3.0"
+  },
+  "engines": {
+    "npm": ">=3"
+  },
+  "author": "Gamesys MDD",
+  "dependencies": {
+    "moment": "^2.18.1",
+    "react-addons-shallow-compare": "^15.6.0",
+    "react-bootstrap": "^0.31.2",
+    "react-bootstrap-date-picker": "^5.1.0",
+    "react-dates": "^12.3.0"
+  }
+}
