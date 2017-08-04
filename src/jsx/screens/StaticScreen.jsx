@@ -112,17 +112,17 @@ class StaticScreen extends React.Component {
                 const vip = this.state.vip ? 'vip/' : '';
                 const folder = this.state.folder.toLowerCase();
                 const user = this.state.user ? this.state.user : ventureItem.testUsers[0];
-                const unicornUrl= `https://${ventureItem.url}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
-                const desktopUrl= `https://${ventureItem.desktopUrl}/api/content/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const unicornUrl= `https://${ventureItem.url}/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const desktopUrl= `https://${ventureItem.desktopUrl}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
                 const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
                 output = <Panel>
                     <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
                     <br />
                     {this.state.vip ? <label className="vip-tag"><h3>VIP</h3></label> : null }
                     <span>Desktop Link:</span>
-                    <p><a href={desktopUrl}>{desktopUrl}</a></p>
+                    <p><a href={desktopUrl} target="_blank">{desktopUrl}</a></p>
                     <span>Unicorn Link:</span>
-                    <p><a href={unicornUrl}>{unicornUrl}</a></p>
+                    <p><a href={unicornUrl} target="_blank">{unicornUrl}</a></p>
                     <span>Test Users:</span>
                     <p>{testUsers}</p>
                     <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
