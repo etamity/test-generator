@@ -6,7 +6,7 @@ import 'babel-polyfill';
 
 import promoStates from './constants/promoStates';
 import StaticScreen from './screens/StaticScreen';
-
+import Config from '../config';
 class Promo extends React.Component {
 
     constructor(props) {
@@ -14,16 +14,12 @@ class Promo extends React.Component {
 
         this.state = {
             currentScreen: promoStates.STATIC_SCREEN,
-            config: null
+            config: Config
         };
     }
 
     componentDidMount() {
-        fetch('https://github.gamesys.co.uk/pages/joey-etamity/test-info-generator/config.json')
-        .then(response => response.json())
-        .then(json => {
-            this.setState({config: json});
-        });
+
     }
 
     // Remove listener for PromoStore state changes
