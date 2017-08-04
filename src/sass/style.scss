@@ -4,6 +4,10 @@
     margin: 50px auto;
 }
 
+.container h3 {
+    text-align: center;
+}
+
 .form-group {
     margin: 30px 0 !important;
 }
@@ -19,4 +23,25 @@ span{
 
 .member-button {
     margin: 10px;
+}
+
+.panel {
+    position: relative;
+}
+
+.vip-tag {
+    right: 15px;
+    top: 70px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 150px 150px 0;
+    border-color: transparent #f4d313 transparent transparent;
+    position: absolute;
+    color: white;
+}
+
+.vip-tag h3 {
+    position: absolute;
+    left: 70px;
 }

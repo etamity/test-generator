@@ -37,7 +37,6 @@ class StaticScreen extends React.Component {
         this.setState({ vip: !this.state.vip });
     }
     _copyToClipboard(text) {
-        console.log(text);
         if (window.clipboardData && window.clipboardData.setData) {
             // IE specific code path to prevent textarea being shown while dialog is visible.
             return window.clipboardData.setData('Text', text);
@@ -81,7 +80,7 @@ class StaticScreen extends React.Component {
                 <FormGroup>
                 <InputGroup className="form">
                     <Col>
-                    <Button bsStyle={this.state.vip ? 'info' : 'default'} onClick={this._onVipButtonClick}>VIP</Button>
+                    <Button bsStyle={this.state.vip ? 'warning' : 'default'} onClick={this._onVipButtonClick}>VIP</Button>
                     </Col>
                     <Col lg={10}>
                         <FormControl type="text"
@@ -89,6 +88,7 @@ class StaticScreen extends React.Component {
                     </Col>
                     <Col>
                         <SingleDatePicker
+                                displayFormat="DD-MM-YYYY"
                                 date={this.state.date}
                                 onDateChange={date => this.setState({ date: date })}
                                 focused={this.state.focused}
@@ -116,8 +116,9 @@ class StaticScreen extends React.Component {
                 const unicornUrl = `https://${ventureItem.url}/api/content/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
                 const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrlPreview}\n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
                 output = <Panel>
-                    <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY</Button>
+                    <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
                     <br />
+                    {this.state.vip ? <label className="vip-tag"><h3>VIP</h3></label> : null }
                     <span>Desktop Link:</span>
                     <p><a href={desktopUrl}>{desktopUrl}</a></p>
                     <span>Unicorn Link:</span>
@@ -125,12 +126,12 @@ class StaticScreen extends React.Component {
                     <p><a href={unicornUrl}>{unicornUrl}</a></p>
                     <span>Test Users:</span>
                     <p>{testUsers}</p>
-                    <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY</Button>
+                    <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
                 </Panel>;
 
             }
             thePartial = <div className="container">
-                <h2>Test Instructions Generator</h2>
+                <h3>Test Instructions Generator</h3>
                 {ventures}
                 {promotionsInfo}
                 {output}
