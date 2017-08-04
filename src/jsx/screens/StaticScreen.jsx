@@ -90,6 +90,7 @@ class StaticScreen extends React.Component {
                         <SingleDatePicker
                                 displayFormat="DD-MM-YYYY"
                                 date={this.state.date}
+                                isOutsideRange={() => false}
                                 onDateChange={date => this.setState({ date: date })}
                                 focused={this.state.focused}
                                 onFocusChange={({ focused }) => this.setState({ focused })}
@@ -111,10 +112,9 @@ class StaticScreen extends React.Component {
                 const vip = this.state.vip ? 'vip/' : '';
                 const folder = this.state.folder.toLowerCase();
                 const user = this.state.user ? this.state.user : ventureItem.testUsers[0];
-                const desktopUrl = `https://${ventureItem.desktopUrl}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
-                const unicornUrlPreview = `https://${ventureItem.url}/api/content/promotions?previewDate=${date}`;
-                const unicornUrl = `https://${ventureItem.url}/api/content/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
-                const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrlPreview}\n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
+                const unicornUrl= `https://${ventureItem.url}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const desktopUrl= `https://${ventureItem.desktopUrl}/api/content/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
                 output = <Panel>
                     <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
                     <br />
@@ -122,7 +122,6 @@ class StaticScreen extends React.Component {
                     <span>Desktop Link:</span>
                     <p><a href={desktopUrl}>{desktopUrl}</a></p>
                     <span>Unicorn Link:</span>
-                    <p><a href={unicornUrlPreview}>{unicornUrlPreview}</a></p>
                     <p><a href={unicornUrl}>{unicornUrl}</a></p>
                     <span>Test Users:</span>
                     <p>{testUsers}</p>
