@@ -32,3 +32,8 @@ gulp.task('watch', ['lint'], function () {
 gulp.task('lint', function () {
     tasks.lint();
 });
+
+gulp.task('copy', function() {
+    gulp.src('./build/prod/**/*')
+    .pipe(gulp.dest('./docs'));
+});

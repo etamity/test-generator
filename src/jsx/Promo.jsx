@@ -19,7 +19,7 @@ class Promo extends React.Component {
     }
 
     componentDidMount() {
-        fetch('./config.json')
+        fetch('https://github.gamesys.co.uk/pages/joey-etamity/test-info-generator/config.json')
         .then(response => response.json())
         .then(json => {
             this.setState({config: json});
