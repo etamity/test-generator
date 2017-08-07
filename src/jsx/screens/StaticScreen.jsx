@@ -112,8 +112,8 @@ class StaticScreen extends React.Component {
                 const vip = this.state.vip ? 'vip/' : '';
                 const folder = this.state.folder.toLowerCase();
                 const user = this.state.user ? this.state.user : ventureItem.testUsers[0];
-                const unicornUrl= `https://${ventureItem.url}/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
-                const desktopUrl= `https://${ventureItem.desktopUrl}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const unicornUrl= `https://${ventureItem.url}/api/content/promotions/${vip}${folder}/?previewDate=${date}&m=${user}`;
+                const desktopUrl= `https://${ventureItem.desktopUrl}/promotions/detailedpromotionstory/${vip}${folder}/?previewDate=${date}&m=${user}`;
                 const outputText = `Desktop: \n${desktopUrl}\n\nUnicorn: \n${unicornUrl}\n\nTest Users:\n${ventureItem.testUsers.join(', ').toString()}`;
                 output = <Panel>
                     <Button bsStyle="info" block onClick={() => this._copyToClipboard(outputText)}>COPY TO CLIPBOARD</Button>
